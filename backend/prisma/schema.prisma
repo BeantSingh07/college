@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String   @id @default(uuid())
+  username            String   @unique
+  password            String
+  role                Role     @default(Staff)
+}
+
+model Student {
+  id                  String   @id @default(uuid())
+  name                String
+  fatherName          String
+  motherName          String
+  dob                 DateTime @default(now()) @db.Date
+  mobile              String
+  parentMobile        String
+  address             String
+  rollNumber          String
+  regNumber           String
+  category            Category
+  scholarshipType     scholarshipType
+  adhaarNo            String
+  course              Course
+  batch               String
+  leetStatus          Boolean
+  statusNow           Status
+  bloodGroup          String
+  dataValidated       Boolean @default(false)
+  email               String
+  familyIncome        String
+  createdAt           DateTime @default(now()) @db.Date
+  familyOccupation    String
+}
+
+model Qualification {
+  id                                    String   @id @default(uuid())
+  matricBoardName                       BoardName
+  matricRollNumeber                     String
+  matricTotalMarks                      String
+  matricObtainedMarks                   String
+  matricPercentage                      String
+  leetStatus                            Boolean
+  secondaryQualificationType            SecondaryQualificationType
+  secondaryQualificationBoardName       BoardName
+  secondaryQualificationRollNumber      String
+  secondaryQualificationTotalMarks      String
+  secondaryQualificationObtainedMarks   String
+  secondaryQualificationPercentage      String 
+}
+
+model Fee {
+  id                  String   @id @default(uuid())
+  feeSemester         Semester
+  feeAmount           Int
+  dateOfDeposit       DateTime @default(now()) @db.Date
+
+}
+
+enum Status{
+  onRoll
+  Passout
+  Dropped
+}
+
+enum Category{
+  General
+  OBC
+  SC
+  Other
+}
+
+enum Course {
+  ArchitectureAssistenship
+  CivilEngg
+  ElectronicsAndCommunicationEngg
+  MechanicalEngg
+  ComputerScienceEngg
+  ElectricalEngg
+  MechanicalEnggProduction
+  Pharmacy
+  InformationTechnology
+}
+
+enum scholarshipType{
+  FullFee
+  CMS100
+  CMS90
+  CMS80
+  CMS70
+  PMS 
+  FWS
+}
+
+enum Role {
+  Admin
+  Staff
+}
+
+enum BoardName {
+  PSEB
+  CBSE
+  ICSE
+  OpenSchool
+  other
+}
+
+enum SecondaryQualificationType {
+  NonMedical
+  Medical 
+  Vocational
+  ITI 
+  DiplomaAny
+}
+enum Semester{
+  First
+  Second
+  Third
+  Fourth
+  Fifth
+  Sixth
+}
